@@ -41,9 +41,8 @@ const DateForm = props => {
           ></input>
         </label>
         <button onClick={props.handleSubmit}>Search</button>
-        <button onClick={props.getPictureOfTheDay}>Todays Picture</button>
+        {props.apod && <button onClick={props.getPictureOfTheDay}>Todays Picture</button>}
       </form>
-      <p><i>Valid dates start June 16, 1995</i></p>
     </div>
   );
 };
