@@ -1,3 +1,12 @@
 .APOD {
-    text-align: center;
+  text-align: center;
+  border: solid 1px yellow;
+}
+
+.Info {
+  max-width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  border: solid 1px orange;
 }

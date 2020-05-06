@@ -4,27 +4,23 @@ import PictureInfo from "../../components/PictureInfo/PictureInfo";
 import classes from "./APOD.module.css";
 import axios from "axios";
 
-const APOD = props => {
+const APOD = (props) => {
   const [picture, setPicture] = useState("");
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
+  const [picDate, setPicDate] = useState("");
   const [copyRight, setCopyright] = useState("");
 
-  const [year, handleYearChange] = useState("");
-  const [month, handleMonthChange] = useState("");
-  const [day, handleDayChange] = useState("");
-  const [date, handleDateChange] = useState(new Date());
-
-  let dateBuilder = [];
-
-  const [loading, setLoading] = useState(true);
-  const [success, setSuccess] = useState(true);
+  const [inputDate, handleDateChange] = useState(new Date());
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   useEffect(() => {
-    getPictureOfTheDay(true);
+    getPictureOfTheDay(inputDate);
   }, []);
 
   const getPictureOfTheDay = async (showToday, d) => {
+    setLoading(true);
     let url =
       "https://api.nasa.gov/planetary/apod?api_key=kvrxQ3qubIwJq4LxYXvFeer9WgfGn8ngDH9e2snK";
 
@@ -32,62 +28,44 @@ const APOD = props => {
       url = `https://api.nasa.gov/planetary/apod?date=${d}&api_key=kvrxQ3qubIwJq4LxYXvFeer9WgfGn8ngDH9e2snK`;
     }
 
-    await axios.get(url)
-      .then(res => {
+    await axios
+      .get(url)
+      .then((res) => {
         setPicture(res.data.url);
         setTitle(res.data.title);
         setDesc(res.data.explanation);
-        handleDateChange(new Date(res.data.date));
+        setPicDate(res.data.date);
         setCopyright(res.data.copyright);
-        let d = res.data.date.split("-");
-        handleYearChange(d[0]);
-        handleMonthChange(d[1]);
-        handleDayChange(d[2]);
         setLoading(false);
         setSuccess(true);
       })
-      .catch(err => {
-        alert('Date is not valid')
+      .catch((err) => {
+        alert("Date is not valid");
+        setLoading(false);
+        setSuccess(false);
       });
   };
 
-  const handleSubmit = event => {
-    dateBuilder = [];
+  const handleSubmit = (event) => {
     event.preventDefault();
-    dateBuilder.push(year);
-    if (month.length < 2) {
-      dateBuilder.push("0" + month);
-    } else {
-      dateBuilder.push(month);
-    }
-    if (day.length < 2) {
-      dateBuilder.push("0" + day);
-    } else {
-      dateBuilder.push(day);
-    }
-    getPictureOfTheDay(false, dateBuilder.join("-"));
+    getPictureOfTheDay(false, inputDate);
   };
 
   return (
     <div className={classes.APOD}>
-      <h1>Astronomy Picture of the Day</h1>
+      <h2>Astronomy Picture of the Day</h2>
       <DateForm
-        apod={true}
         getPictureOfTheDay={getPictureOfTheDay}
         handleSubmit={handleSubmit}
-        month={month}
-        handleMonthChange={handleMonthChange}
-        day={day}
-        handleDayChange={handleDayChange}
-        year={year}
-        handleYearChange={handleYearChange}
-        date={date}
+        date={inputDate}
         handleDateChange={handleDateChange}
       />
-      <p><i>Valid dates start June 16, 1995</i></p>
+      <p>
+        <i>Valid dates start June 16, 1995</i>
+      </p>
       <PictureInfo
         title={title}
-        date={date}
+        date={picDate}
         desc={desc}
         picture={picture}
         copyRight={copyRight}
@@ -99,4 +77,4 @@ const APOD = props => {
   );
 };
 
-export default APOD
+export default APOD;
