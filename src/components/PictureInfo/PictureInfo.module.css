@@ -1,0 +1,12 @@
+.Info {
+  display: flexbox;
+  align-items: center;
+  border: solid 1px blueviolet;
+}
+
+.Img {
+  border: solid 1px black;
+  object-fit: scale-down;
+  width: 1280px;
+  height: 720px;
+}
