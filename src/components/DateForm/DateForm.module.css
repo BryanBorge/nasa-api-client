@@ -1,0 +1,14 @@
+.Form {
+  margin: 15px;
+}
+
+.Input {
+  padding-right: 2px;
+  padding-bottom: 10px;
+}
+
+.Button {
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-bottom: 5px;
+}

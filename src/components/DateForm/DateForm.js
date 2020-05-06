@@ -1,49 +1,52 @@
 import React from "react";
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
+import Grid from "@material-ui/core/Grid";
+import classes from "./DateForm.module.css";
 
-const DateForm = props => {
+const DateForm = (props) => {
   return (
-    <div>
-      <form>
-        <label>
-          Month:
-          <input
-            type="number"
-            name="month"
-            min="1"
-            max="12"
-            maxLength="2"
-            value={props.month}
-            onChange={e => props.handleMonthChange(e.target.value)}
-          ></input>
-        </label>
-        <label>
-          Day:
-          <input
-            type="number"
-            name="day"
-            min="1"
-            max="31"
-            maxLength="2"
-            value={props.day}
-            onChange={e => props.handleDayChange(e.target.value)}
-          ></input>
-        </label>
-        <label>
-          Year:
-          <input
-            type="number"
-            name="year"
-            max="2020"
-            maxLength="4"
-            minLength="4"
-            value={props.year}
-            onChange={e => props.handleYearChange(e.target.value)}
-          ></input>
-        </label>
-        <button onClick={props.handleSubmit}>Search</button>
-        {props.apod && <button onClick={props.getPictureOfTheDay}>Todays Picture</button>}
-      </form>
+    <div className={classes.Form}>
+      <Grid container direction="row" justify="center" alignItems="center">
+        <Grid item sm={1.5}>
+          <div className={classes.Input}>
+            <TextField
+              id="date"
+              label="Date"
+              type="date"
+              defaultValue={props.date}
+              InputLabelProps={{
+                shrink: true,
+              }}
+              onChange={(e) => props.handleDateChange(e.target.value)}
+            />
+          </div>
+        </Grid>
+        <Grid item sm={1.5}>
+          <div className={classes.Button}>
+            <Button
+              onClick={props.handleSubmit}
+              variant="contained"
+              color="primary"
+            >
+              Search
+            </Button>
+          </div>
+        </Grid>
+        <Grid item sm={1.5}>
+          <div className={classes.Button}>
+            <Button
+              variant="contained"
+              onClick={props.getPictureOfTheDay}
+              className={classes.Button}
+            >
+              Todays Picture
+            </Button>
+          </div>
+        </Grid>
+      </Grid>
     </div>
   );
 };
+
 export default DateForm;
