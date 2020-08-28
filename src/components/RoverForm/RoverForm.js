@@ -5,12 +5,11 @@ import classes from "./RoverForm.module.css";
 const RoverForm = props => {
   return (
     <div className={classes.roverForm}>
-      <h1>Mars Rover Photos</h1>
       <select id="Rover" onChange={props.handleRoverChange}>
-        <option  selected disabled hidden>
+        <option selected disabled hidden>
           Select a rover
         </option>
-        <option >{props.option1}</option>
+        <option>{props.option1}</option>
         <option>{props.option2}</option>
         <option>{props.option3}</option>
       </select>
