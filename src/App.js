@@ -11,13 +11,13 @@ function App() {
   return (
     <div>
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
-        <Router>
+        <Router basename={baseUrl}>
           <Switch>
-            <Route exact path={`${baseUrl}/`}>
+            <Route exact path="/">
               <Appbar title="Astronomy Picture Of The Day" />
               <APOD />
             </Route>
-            <Route exact path={`${baseUrl}/mars-rover`}>
+            <Route exact path="/mars-rover">
               <Appbar title="Mars Rover" />
               <MarsRover />
             </Route>
