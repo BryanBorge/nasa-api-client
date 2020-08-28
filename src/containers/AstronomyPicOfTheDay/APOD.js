@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect} from "react";
 import DateForm from "../../components/DateForm/DateForm";
 import PictureInfo from "../../components/PictureInfo/PictureInfo";
+import {Appbar} from "../../components/AppBar/Appbar";
 import classes from "./APOD.module.css";
+import {formatDate} from "../../util";
 import axios from "axios";
 
-const APOD = (props) => {
+const APOD = props => {
   const [picture, setPicture] = useState("");
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
@@ -19,18 +21,22 @@ const APOD = (props) => {
     getPictureOfTheDay(inputDate);
   }, []);
 
-  const getPictureOfTheDay = async (showToday, d) => {
+  const getPictureOfTheDay = async showToday => {
     setLoading(true);
-    let url =
-      "https://api.nasa.gov/planetary/apod?api_key=kvrxQ3qubIwJq4LxYXvFeer9WgfGn8ngDH9e2snK";
+    let date;
 
-    if (!showToday) {
-      url = `https://api.nasa.gov/planetary/apod?date=${d}&api_key=kvrxQ3qubIwJq4LxYXvFeer9WgfGn8ngDH9e2snK`;
+    if (showToday) {
+      handleDateChange(new Date());
+      date = formatDate(new Date());
+    } else {
+      date = formatDate(inputDate);
     }
+
+    let url = `https://api.nasa.gov/planetary/apod?date=${date}&api_key=kvrxQ3qubIwJq4LxYXvFeer9WgfGn8ngDH9e2snK`;
 
     await axios
       .get(url)
-      .then((res) => {
+      .then(res => {
         setPicture(res.data.url);
         setTitle(res.data.title);
         setDesc(res.data.explanation);
@@ -39,21 +45,21 @@ const APOD = (props) => {
         setLoading(false);
         setSuccess(true);
       })
-      .catch((err) => {
+      .catch(err => {
         alert("Date is not valid");
+        handleDateChange(new Date());
         setLoading(false);
         setSuccess(false);
       });
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = event => {
     event.preventDefault();
-    getPictureOfTheDay(false, inputDate);
+    getPictureOfTheDay(false);
   };
 
   return (
     <div className={classes.APOD}>
-      <h2>Astronomy Picture of the Day</h2>
       <DateForm
         getPictureOfTheDay={getPictureOfTheDay}
         handleSubmit={handleSubmit}
