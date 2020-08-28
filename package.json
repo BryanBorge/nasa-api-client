@@ -1,6 +1,6 @@
 {
-  "homepage": "http://bryanborge.github.io/nasa-api",
-  "name": "mars-api-client",
+  "homepage": "http://bryanborge.github.io/nasa-api-client",
+  "name": "nasa-api-client",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
