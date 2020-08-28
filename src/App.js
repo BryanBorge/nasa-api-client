@@ -7,7 +7,7 @@ import DateFnsUtils from "@date-io/date-fns";
 import {BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
 
 function App() {
-  let baseUrl = "https://bryanborge.github.io/nasa-api-client/";
+  let baseUrl = "https://bryanborge.github.io/nasa-api-client";
   return (
     <div>
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
