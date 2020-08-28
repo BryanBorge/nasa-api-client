@@ -19,7 +19,8 @@ function App() {
             </Route>
             <Route exact path="/mars-rover">
               <Appbar title="Mars Rover" />
-              <MarsRover />
+              {/* <MarsRover /> */}
+              <h1>Coming soon</h1>
             </Route>
           </Switch>
         </Router>
