@@ -1,0 +1,19 @@
+.toolbar {
+  background: #2c2c2c;
+  flex-wrap: wrap;
+}
+
+.appBar {
+  border-bottom: 2px solid gray;
+}
+
+.toolbarTitle {
+  display: flex;
+  flex-grow: 1;
+}
+
+a,
+a:hover {
+  padding: 5px;
+  color: white;
+}
