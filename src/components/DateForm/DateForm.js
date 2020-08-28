@@ -1,24 +1,26 @@
 import React from "react";
-import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import classes from "./DateForm.module.css";
+import {KeyboardDatePicker} from "@material-ui/pickers";
 
-const DateForm = (props) => {
+const DateForm = props => {
   return (
     <div className={classes.Form}>
       <Grid container direction="row" justify="center" alignItems="center">
         <Grid item sm={1.5}>
           <div className={classes.Input}>
-            <TextField
-              id="date"
-              label="Date"
-              type="date"
-              defaultValue={props.date}
-              InputLabelProps={{
-                shrink: true,
+            <KeyboardDatePicker
+              clearable
+              value={props.date}
+              placeholder="MM/DD/YYYY"
+              onChange={date => {
+                console.log(date);
+                props.handleDateChange(date);
               }}
-              onChange={(e) => props.handleDateChange(e.target.value)}
+              maxDate={new Date()}
+              minDate={new Date("Fri Jun 16 1995 00:00:00 GMT-0400")}
+              format="MM/dd/yyyy"
             />
           </div>
         </Grid>
@@ -37,7 +39,7 @@ const DateForm = (props) => {
           <div className={classes.Button}>
             <Button
               variant="contained"
-              onClick={props.getPictureOfTheDay}
+              onClick={() => props.getPictureOfTheDay(true)}
               className={classes.Button}
             >
               Todays Picture
