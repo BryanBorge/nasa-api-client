@@ -11,7 +11,7 @@ function App() {
   return (
     <div>
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
-        <Router basename={baseUrl}>
+        <Router basename={window.location.pathname || ""}>
           <Switch>
             <Route exact path="/">
               <Appbar title="Astronomy Picture Of The Day" />
