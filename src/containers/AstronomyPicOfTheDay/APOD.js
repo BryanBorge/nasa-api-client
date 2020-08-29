@@ -59,26 +59,28 @@ const APOD = props => {
   };
 
   return (
-    <div className={classes.APOD}>
-      <DateForm
-        getPictureOfTheDay={getPictureOfTheDay}
-        handleSubmit={handleSubmit}
-        date={inputDate}
-        handleDateChange={handleDateChange}
-      />
-      <p>
-        <i>Valid dates start June 16, 1995</i>
-      </p>
-      <PictureInfo
-        title={title}
-        date={picDate}
-        desc={desc}
-        picture={picture}
-        copyRight={copyRight}
-        sucess={success}
-        loading={loading}
-        setLoading={setLoading}
-      />
+    <div className={classes.container}>
+      <div className={classes.APOD}>
+        <DateForm
+          getPictureOfTheDay={getPictureOfTheDay}
+          handleSubmit={handleSubmit}
+          date={inputDate}
+          handleDateChange={handleDateChange}
+        />
+        <p>
+          <i>Valid dates start June 16, 1995</i>
+        </p>
+        <PictureInfo
+          title={title}
+          date={picDate}
+          desc={desc}
+          picture={picture}
+          copyRight={copyRight}
+          sucess={success}
+          loading={loading}
+          setLoading={setLoading}
+        />
+      </div>
     </div>
   );
 };
