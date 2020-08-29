@@ -1,3 +1,14 @@
 .roverForm {
-  text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding-top: 20px;
+}
+
+.formControl {
+  width: 150px;
+}
+
+.input {
+  margin-right: 20px;
 }
