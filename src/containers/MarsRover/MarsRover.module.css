@@ -1,28 +1,34 @@
 .roverInfo {
-    font-family: 'Open Sans', sans-serif;
-    font-size: 12px;
-    margin: 35px 35px;
-    display:  grid;
-    column-gap: 15px;
-    row-gap: 15px;
-    grid-template-columns: repeat(3,minmax(200px,400px));
-    grid-template-rows: auto-fit;
-    justify-items: center;
+  font-family: "Open Sans", sans-serif;
+  font-size: 12px;
+  margin: 35px 35px;
+  display: grid;
+  column-gap: 15px;
+  row-gap: 15px;
+  grid-template-columns: repeat(3, minmax(200px, 400px));
+  grid-template-rows: auto-fit;
+  justify-items: center;
 }
 
 h1 {
-    text-align: center;
+  text-align: center;
+}
+
+.container {
+  padding-top: 25px;
+  max-width: 775px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 @media (max-width: 900px) {
-    .roverInfo {
-        grid-template-columns: repeat(2,minmax(200px,400px));
-    }
+  .roverInfo {
+    grid-template-columns: repeat(2, minmax(200px, 400px));
+  }
 }
 
-
 @media (max-width: 600px) {
-    .roverInfo {
-        grid-template-columns: repeat(1,minmax(200px,400px));
-    }
+  .roverInfo {
+    grid-template-columns: repeat(1, minmax(200px, 400px));
+  }
 }

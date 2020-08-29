@@ -1,33 +1,72 @@
-import React, { useState } from "react";
+import React, {useState, useEffect} from "react";
 import RoverForm from "../../components/RoverForm/RoverForm";
 import RoverInfo from "../../components/RoverInfo/RoverInfo";
 import Pagination from "../../components/Pagination";
 import axios from "axios";
+import {CollapsibleTable} from "./RoverTable";
 import classes from "./MarsRover.module.css";
 
 const MarsRover = props => {
-  const [date, handleDateChange] = useState(new Date());
-  const [year, handleYearChange] = useState("");
-  const [month, handleMonthChange] = useState("");
-  const [day, handleDayChange] = useState("");
-  let dateBuilder = [];
+  let roverNames = ["Curiosity", "Spirit", "Opportunity"];
 
+  //State for input form
   const [rover, setRover] = useState("");
+  const [sol, setSol] = useState("");
+  const [camera, setCamera] = useState("");
+
+  //State containing rover information
+  const [rovers, setRovers] = useState([]);
+
+  //State containing pictures from the query
   const [pictures, setPictures] = useState([]);
+
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(true);
 
   const [currentPage, setCurentPage] = useState(1);
   const [postsPerPage] = useState(30);
 
-  const getRoverData = async (rover, d) => {
-    setLoading(true);
+  const getRoverInfo = () => {
+    roverNames.map(rover => {
+      axios
+        .get(
+          `https://api.nasa.gov/mars-photos/api/v1/rovers/${rover}/?api_key=kvrxQ3qubIwJq4LxYXvFeer9WgfGn8ngDH9e2snK`
+        )
+        .then(response => {
+          setRovers(prevState => [...prevState, response.data.rover]);
+        })
+        .catch(err => {
+          setSuccess(false);
+          setLoading(false);
+          alert("Error");
+        });
+    });
+  };
 
-    let url = `https://api.nasa.gov/mars-photos/api/v1/rovers/${rover}/photos?earth_date=${d}&api_key=kvrxQ3qubIwJq4LxYXvFeer9WgfGn8ngDH9e2snK`;
+  //Load rover data to display in table
+  useEffect(() => {
+    getRoverInfo();
+  }, []);
+
+  const getRoverPictures = async () => {
+    if (rover === "" || sol === "") {
+      setLoading(false);
+      alert("Choose and rover and sol to search");
+      return;
+    }
+    setLoading(true);
+    console.log(rover);
+    console.log(sol);
+
+    let url = `https://api.nasa.gov/mars-photos/api/v1/rovers/${rover}/photos?sol=${sol}&api_key=kvrxQ3qubIwJq4LxYXvFeer9WgfGn8ngDH9e2snK`;
+    if (camera !== "All Cameras") {
+      url = `https://api.nasa.gov/mars-photos/api/v1/rovers/${rover}/photos?sol=${sol}&camera=${camera}&api_key=kvrxQ3qubIwJq4LxYXvFeer9WgfGn8ngDH9e2snK`;
+    }
 
     await axios
       .get(url)
       .then(response => {
+        console.log(response);
         if (response.data.photos.length > 1) {
           const newInfo = response.data.photos;
           setPictures(newInfo);
@@ -54,51 +93,28 @@ const MarsRover = props => {
     setCurentPage(pageNumber);
   };
 
-  const handleRoverChange = event => {
-    setRover(event.target.value);
-  };
-
   const handleSubmit = event => {
     event.preventDefault();
-    if (rover.length === 0) {
-      alert("Please select a rover");
-      return;
-    }
-    dateBuilder = [];
-    event.preventDefault();
-    dateBuilder.push(year);
-    if (month.length < 2) {
-      dateBuilder.push("0" + month);
-    } else {
-      dateBuilder.push(month);
-    }
-    if (day.length < 2) {
-      dateBuilder.push("0" + day);
-    } else {
-      dateBuilder.push(day);
-    }
-    getRoverData(rover, dateBuilder.join("-"));
+    getRoverPictures();
   };
 
   return (
     <div>
       <RoverForm
-        option1={"Curiosity"}
-        option2={"Opportuniy"}
-        option3={"Spirit"}
+        rovers={rovers}
+        rover={rover}
+        setRover={setRover}
+        sol={sol}
+        setSol={setSol}
+        camera={camera}
+        setCamera={setCamera}
         handleSubmit={handleSubmit}
-        handleRoverChange={handleRoverChange}
-        month={month}
-        handleMonthChange={handleMonthChange}
-        day={day}
-        handleDayChange={handleDayChange}
-        year={year}
-        handleYearChange={handleYearChange}
-        date={date}
-        handleDateChange={handleDateChange}
       />
+      <div className={classes.container}>
+        <CollapsibleTable rovers={rovers} />
+      </div>
       <div className={classes.roverInfo}>
-        <RoverInfo data={currentPost} loading={loading} success={success}/>
+        <RoverInfo data={currentPost} loading={loading} success={success} />
       </div>
       <Pagination
         postsPerPage={postsPerPage}
