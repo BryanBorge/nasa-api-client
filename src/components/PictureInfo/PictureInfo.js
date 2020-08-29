@@ -2,7 +2,7 @@ import React from "react";
 import ReactPlayer from "react-player";
 import classes from "./PictureInfo.module.css";
 
-const PictureInfo = (props) => {
+const PictureInfo = props => {
   let options = {
     weekday: "long",
     year: "numeric",
@@ -29,9 +29,9 @@ const PictureInfo = (props) => {
       <div>
         {props.picture.includes("youtube") ? (
           <ReactPlayer
-            className={classes.video}
             url={props.picture}
             controls={true}
+            className={classes.reactplayer}
           />
         ) : (
           <img src={props.picture} alt="N/A" className={classes.Img} />

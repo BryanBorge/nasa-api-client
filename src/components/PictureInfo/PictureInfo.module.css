@@ -1,10 +1,20 @@
 .Info {
   display: flexbox;
   align-items: center;
+  text-align: center;
+  width: 50%;
+  transform: translateX(50%);
 }
 
 .Img {
   object-fit: scale-down;
   width: 1280px;
   height: 720px;
+  margin: 20px;
+}
+
+.reactplayer {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
 }
