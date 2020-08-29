@@ -29,7 +29,7 @@ const DateForm = props => {
             <Button
               onClick={props.handleSubmit}
               variant="contained"
-              color="primary"
+              className={classes.Button}
             >
               Search
             </Button>
